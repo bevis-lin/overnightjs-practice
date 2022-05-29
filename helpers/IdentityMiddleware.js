@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var jet_logger_1 = require("jet-logger");
 //import Creator from "../models/creator.model";
 function checkAddressProvided(req, res, next) {
     var Creator = require("../models/creator.model.js");
@@ -21,8 +22,11 @@ function checkAddressProvided(req, res, next) {
                     });
                 }
             }
-            else
+            else {
+                jet_logger_1["default"].info(data.Name);
+                req.query.userName = data.Name;
                 next();
+            }
         });
     }
 }

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import Logger from "jet-logger";
 //import Creator from "../models/creator.model";
 
 export default function checkAddressProvided(
@@ -22,7 +23,11 @@ export default function checkAddressProvided(
             message: "Error retrieving Creator with address " + walletAddr,
           });
         }
-      } else next();
+      } else {
+        Logger.info(data.Name);
+        req.query.userName = data.Name;
+        next();
+      }
     });
   }
 }
