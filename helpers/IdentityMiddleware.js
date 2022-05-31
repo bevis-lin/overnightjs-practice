@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var jet_logger_1 = require("jet-logger");
-//import Creator from "../models/creator.model";
+var WalletController_1 = require("../WalletController");
 function checkAddressProvided(req, res, next) {
     var Creator = require("../models/creator.model.js");
     var walletAddr = req.query.address;
@@ -12,9 +12,11 @@ function checkAddressProvided(req, res, next) {
         Creator.findByAddress(walletAddr, function (err, data) {
             if (err) {
                 if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: "Not found Creator with address " + walletAddr + "."
-                    });
+                    //res.status(404).send({
+                    //message: `Not found Creator with address ${walletAddr}.`,
+                    //});
+                    var walletController = new WalletController_1.WalletController();
+                    next(walletController.reportSpam(req, res));
                 }
                 else {
                     res.status(500).send({
